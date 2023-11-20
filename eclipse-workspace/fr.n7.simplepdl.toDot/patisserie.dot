@@ -1,0 +1,13 @@
+
+digraph patisserie {
+			"pepitesChocolat (300)" [color=blue fontcolor=blue shape="box"]
+			"pateCookie (20)" [color=blue fontcolor=blue shape="box"]
+
+			manger
+			faireCookie
+					"pateCookie (20)" -> faireCookie [arrowhead=vee label=1]
+					"pepitesChocolat (300)" -> faireCookie [arrowhead=vee label=10]
+
+			faireCookie -> manger [arrowhead=vee label=f2s]
+}
+

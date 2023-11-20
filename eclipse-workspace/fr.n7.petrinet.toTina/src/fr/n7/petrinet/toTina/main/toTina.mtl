@@ -1,0 +1,65 @@
+[comment encoding = UTF-8 /]
+[module toTina('http://petrinet')]
+
+
+[template public networkToTina(aNetwork : Network)]
+[comment @main/]
+[file (aNetwork.name + '.net', false, 'UTF-8')]
+
+net [aNetwork.name/]
+[let pls : OrderedSet(Place) = aNetwork.getPls()]
+	[for (pl : Place | pls)]
+		[pl.toTina()/]
+	[/for]
+[/let]
+[let trs : OrderedSet(Transition) = aNetwork.getTrs()]
+	[for (tr : Transition | trs)]
+		[tr.toTina()/]
+	[/for]
+[/let]
+
+[/file]
+[/template]
+
+
+
+[query public getPls(p: Network) : OrderedSet(Place) = 
+	p.networkElements->select( e | e.oclIsTypeOf(Place) )
+		->collect( e | e.oclAsType(Place) )
+		->asOrderedSet()
+/]
+[query public getTrs(p: Network) : OrderedSet(Transition) = 
+	p.networkElements->select( e | e.oclIsTypeOf(Transition) )
+		->collect( e | e.oclAsType(Transition) )
+		->asOrderedSet()
+/]
+[query public getPrevArcs(t: Transition) : OrderedSet(Arc) = 
+	t.linksToPrevArcs->select( e | e.oclIsTypeOf(Arc) )
+		->collect( e | e.oclAsType(Arc) )
+		->asOrderedSet()
+/]
+[query public getNextArcs(t: Transition) : OrderedSet(Arc) = 
+	t.linksToNextArcs->select( e | e.oclIsTypeOf(Arc) )
+		->collect( e | e.oclAsType(Arc) )
+		->asOrderedSet()
+/]
+
+[template public toTina(pl : Place) post (trim()) ]
+	pl [pl.name /] ([pl.tokens/])
+[/template]
+
+[template public toTina(tr : Transition) post (trim()) ]
+	tr [tr.name/] [prevPlacesToTina(tr)/] -> [nextPlacesToTina(tr)/]
+[/template]
+
+[template public prevPlacesToTina(tr : Transition) post (trim()) ]
+	[let arcs : OrderedSet(Arc) = tr.getPrevArcs()]
+		[for (arc : Arc | arcs)][arc.linkToPrevCase.name/][if (arc.readOnly)]?[arc.weight/][else][if (arc.weight <> 1)]*[arc.weight/][/if][/if] [/for]
+	[/let]
+[/template]
+
+[template public nextPlacesToTina(tr : Transition) post (trim()) ]
+	[let arcs : OrderedSet(Arc) = tr.getNextArcs()]
+		[for (arc : Arc | arcs)] [arc.linkToNextCase.name/][if (arc.weight <> 1)]*[arc.weight/][/if][/for]
+	[/let]
+[/template]

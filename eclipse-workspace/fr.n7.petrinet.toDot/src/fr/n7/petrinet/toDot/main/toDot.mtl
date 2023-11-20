@@ -1,0 +1,37 @@
+[comment encoding = UTF-8 /]
+[module toDot('http://petrinet')]
+
+
+[template public networkToDot(aNetwork : Network)]
+[comment @main/]
+[file (aNetwork.name + '.dot', false, 'UTF-8')]
+
+digraph [aNetwork.name/] {
+	{
+		node ['['/]shape="box"[']'/];[let trs : OrderedSet(Transition) = aNetwork.getTransitions() ][for (tr : Transition | trs)][tr.name/];[/for][/let]
+	}
+	[let arcs : OrderedSet(Arc) = aNetwork.getArcs() ]
+		[for (arc : Arc | arcs)]
+			[arc.toDot()/]
+		[/for]
+	[/let]
+}
+
+[/file]
+[/template]
+
+[query public getArcs(n: Network) : OrderedSet(Arc) = 
+	n.networkElements->select( e | e.oclIsTypeOf(Arc) )
+		->collect( e | e.oclAsType(Arc) )
+		->asOrderedSet()
+/]
+
+[query public getTransitions(n: Network) : OrderedSet(Transition) = 
+	n.networkElements->select( e | e.oclIsTypeOf(Transition) )
+		->collect( e | e.oclAsType(Transition) )
+		->asOrderedSet()
+/]
+
+[template public toDot(arc : Arc) post (trim()) ]
+	"[arc.linkToPrevCase.name /][if (arc.linkToPrevCase.oclIsTypeOf(Place))] ([arc.linkToPrevCase.oclAsType(Place).tokens/])[/if]" -> "[arc.linkToNextCase.name /][if (arc.linkToNextCase.oclIsTypeOf(Place))] ([arc.linkToNextCase.oclAsType(Place).tokens/])[/if]" ['['/]arrowhead=[if arc.readOnly]dot[else]vee[/if] label=[arc.weight/][']'/]
+[/template]

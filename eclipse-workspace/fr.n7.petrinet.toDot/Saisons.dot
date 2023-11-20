@@ -1,0 +1,11 @@
+
+digraph Saisons {
+	{
+		node [shape="box"];ete_a_hiver;hiver_a_ete;
+	}
+			"hiver_a_ete" -> "ete (1)" [arrowhead=vee label=1]
+			"hiver (0)" -> "hiver_a_ete" [arrowhead=vee label=1]
+			"ete_a_hiver" -> "hiver (0)" [arrowhead=vee label=1]
+			"ete (1)" -> "ete_a_hiver" [arrowhead=vee label=1]
+}
+

@@ -1,0 +1,86 @@
+[comment encoding = UTF-8 /]
+[module toDot('http://simplepdl')]
+
+
+[template public processToDot(aProcess : Process)]
+[comment @main/]
+[file (aProcess.name + '.dot', false, 'UTF-8')]
+
+digraph [aProcess.name /] {
+	[let rs : OrderedSet(Ressource) = aProcess.getRs() ]
+		[for (r : Ressource | rs)]
+			[r.toDot()/]
+		[/for]
+	[/let]
+
+	[let wds : OrderedSet(WorkDefinition) = aProcess.getWDs() ]
+		[for (wd : WorkDefinition | wds)]
+			[wd.toDot()/]
+			[let rns : OrderedSet(RessourceNeed) = wd.getRns() ]
+				[for (rn : RessourceNeed | rns)]
+					[rn.toDot()/]
+				[/for]
+			[/let]
+		[/for]
+	[/let]
+
+	[let wss : OrderedSet(WorkSequence) = aProcess.getWSs() ]
+		[for (ws : WorkSequence | wss)]
+			[ws.toDot()/]
+		[/for]
+	[/let]
+}
+
+[/file]
+[/template]
+
+[query public getRns(wd: WorkDefinition) : OrderedSet(RessourceNeed) = 
+	wd.linksToNeeds->select( e | e.oclIsTypeOf(RessourceNeed) )
+		->collect( e | e.oclAsType(RessourceNeed) )
+		->asOrderedSet()
+/]
+[query public getRs(p: Process) : OrderedSet(Ressource) = 
+	p.processElements->select( e | e.oclIsTypeOf(Ressource) )
+		->collect( e | e.oclAsType(Ressource) )
+		->asOrderedSet()
+/]
+[query public getWDs(p: Process) : OrderedSet(WorkDefinition) = 
+	p.processElements->select( e | e.oclIsTypeOf(WorkDefinition) )
+		->collect( e | e.oclAsType(WorkDefinition) )
+		->asOrderedSet()
+/]
+[query public getWSs(p: Process) : OrderedSet(WorkSequence) = 
+	p.processElements->select( e | e.oclIsTypeOf(WorkSequence) )
+		->collect( e | e.oclAsType(WorkSequence) )
+		->asOrderedSet()
+/]
+
+[query public toLabel(link: WorkSequenceType) : String =
+	if (link = WorkSequenceType::startToStart) then
+		's2s'
+	else
+		if (link = WorkSequenceType::startToFinish) then
+			's2f'
+		else
+			if (link = WorkSequenceType::finishToStart) then
+				'f2s'
+			else
+				'f2f'
+			endif
+		endif
+	endif
+/]
+
+[template public toDot(rn : RessourceNeed) post (trim()) ]
+	"[rn.linkToRessource.name /] ([rn.linkToRessource.amount/])" -> [rn.linkToWorkDefinition.name /] ['['/]arrowhead=vee label=[rn.need /][']'/]
+[/template]
+
+[template public toDot(r : Ressource) post (trim()) ]
+	"[r.name /] ([r.amount/])" ['['/]color=blue fontcolor=blue shape="box"[']'/]
+[/template]
+[template public toDot(wd : WorkDefinition) post (trim()) ]
+	[wd.name /]
+[/template]
+[template public toDot(ws : WorkSequence) post (trim()) ]
+	[ws.predecessor.name /] -> [ws.successor.name /] ['['/]arrowhead=vee label=[ws.linkType.toLabel() /][']'/]
+[/template]
