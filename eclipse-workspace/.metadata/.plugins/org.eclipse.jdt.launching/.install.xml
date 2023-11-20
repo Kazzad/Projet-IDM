@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
+    <entry loc="/usr/lib/jvm/java-11-openjdk-11.0.20.0.8-1.fc38.x86_64" stamp="1692456091503"/>
+    <entry loc="/usr/lib/jvm/java-21-openjdk-21.0.0.0.35-1.rolling.fc38.x86_64" stamp="1694446969662"/>
+    <entry loc="/usr/lib/jvm/java-17-openjdk-17.0.8.0.7-1.fc38.x86_64" stamp="1692456091067"/>
     <entry loc="C:\Program Files\Java\jdk-19" stamp="1674568127722"/>
 </dirs>
