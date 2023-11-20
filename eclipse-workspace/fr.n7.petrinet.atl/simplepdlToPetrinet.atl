@@ -1,0 +1,73 @@
+-- @path SimplePDL=/fr.n7.simplePDL/SimplePDL.ecore
+-- @path PetriNet=/fr.n7.petriNet/PetriNet.ecore
+
+module simplePDL2PetriNet;
+create OUT : PetriNet from IN : SimplePDL;
+
+rule Process2Network {
+	from process : SimplePDL!Process
+	to network : PetriNet!Network(name <- network.name)
+}
+
+rule WD2Machin {
+	from wd : SimplePDL!WorkDefinition
+	to idle : PetriNet!Place (tokens <- 1, name <- wd.name + '_idle'),
+	started : PetriNet!Place (tokens <- 0, name <- wd.name + '_started'),
+	running : PetriNet!Place (tokens <- 0, name <- wd.name + '_running'),
+	finished : PetriNet!Place (tokens <- 0, name <- wd.name + '_finished'),
+	start : PetriNet!Transition (name <- wd.name + '_start'),
+	finish : PetriNet!Transition (name <- wd.name + '_finish'),
+	idle2start : PetriNet!Arc (weight <- 1,
+							   linkToPrevCase <- idle,
+							   linkToNextCase <- start,
+							   readOnly <- false),
+	start2started : PetriNet!Arc (weight <- 1,
+								   linkToPrevCase <- start,
+								   linkToNextCase <- started,
+								   readOnly <- false),
+	start2running : PetriNet!Arc (weight <- 1,
+							   linkToPrevCase <- start,
+							   linkToNextCase <- running,
+							   readOnly <- false),
+	running2finish : PetriNet!Arc (weight <- 1,
+							   linkToPrevCase <- running,
+							   linkToNextCase <- finish,
+							   readOnly <- false),
+	finish2finished : PetriNet!Arc (weight <- 1,
+							   linkToPrevCase <- finish,
+							   linkToNextCase <- finished,
+							   readOnly <- false)		   
+}
+
+rule WS2Readarc {
+	from ws : SimplePDL!WorkSequence
+	to arc : PetriNet!Arc (weight <- 1,
+						readOnly <- true,
+						linkToPrevCase <- thisModule.resolveTemp(ws.predecessor, if ws.linkType = #startToStart or ws.linkType = #startToFinish then
+												'started'
+											else
+												'finished'
+											endif),
+						linkToNextCase <- thisModule.resolveTemp(ws.successor, if ws.linkType = #startToStart or ws.linkType = #finishToStart then
+												'start'
+											else
+												'finish'
+											endif))
+}
+
+rule Ressource2Place {
+	from r : SimplePDL!Ressource
+	to place : PetriNet!Place (tokens <- r.amount, name <- r.name)
+}
+
+rule RessourceNeed2Arcs {
+	from rn : SimplePDL!RessourceNeed
+	to start_arc : PetriNet!Arc (weight <- rn.need,
+								readOnly <- false,
+								linkToPrevCase <- rn.linkToRessource,
+								linkToNextCase <- thisModule.resolveTemp(rn.linkToWorkDefinition, 'start')),
+	finish_arc : PetriNet!Arc (weight <- rn.need,
+								readOnly <- false,
+								linkToPrevCase <- thisModule.resolveTemp(rn.linkToWorkDefinition, 'finish'),
+								linkToNextCase <- rn.linkToRessource)
+}
