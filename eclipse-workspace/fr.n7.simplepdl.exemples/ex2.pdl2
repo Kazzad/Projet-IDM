@@ -1,0 +1,9 @@
+process ex2 {
+wd a {}
+wd b {
+starts if a started
+}
+wd c {
+finishes if b finished
+}
+}

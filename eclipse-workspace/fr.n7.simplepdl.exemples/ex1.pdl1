@@ -1,0 +1,9 @@
+process ex1 {
+wd a [ ressourceNeed 1 from chocolat ]
+wd b [ ]
+wd c [ ressourceNeed 4 from chocolat ]
+ws s2s from a to b
+ws f2f from b to c
+note "attention"
+ressource chocolat 20
+}

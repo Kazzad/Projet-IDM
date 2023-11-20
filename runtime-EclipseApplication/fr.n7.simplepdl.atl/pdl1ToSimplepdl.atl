@@ -1,0 +1,45 @@
+-- @path SimplePDL=/fr.n7.simplePDL/SimplePDL.ecore
+-- @path pdl1=/fr.n7.pdl1/model/generated/PDL1.ecore
+
+module pdl12SimplePDL;
+
+-- Note : XPDL = mÃ©ta-modÃ¨le issu de Xtext
+-- SPDL = mÃ©ta-modÃ¨le SimplePDL
+
+create OUT : SPDL from IN : XPDL;
+
+-- Ce helper n'a pas de contexte. Il est dÃ©fini au niveau du module.
+helper def: convertLinkType(x : XPDL!WorkSequenceType) : SPDL!WorkSequenceType =
+	if x = #s2s then #startToStart
+	else if x = #s2f then #startToFinish
+	else if x = #f2s then #finishToStart
+	else #finishToFinish
+	endif endif endif; -- pas de SinonSi en ATL
+
+rule XProc2SProc {
+	from xp : XPDL!Process
+	to sp : SPDL!Process(
+			name <- xp.name.debug('process name'),
+			-- Ajouter les enfants, sinon les autres Ã©lÃ©ments crÃ©Ã©s seront orphelins !
+			processElements <- xp.processElements
+		)
+}
+
+rule XWD2SWD {
+	from xwd : XPDL!WorkDefinition
+	to swd : SPDL!WorkDefinition(name <- xwd.name.debug('wd'))
+}
+
+rule XWS2SWS {
+	from xws : XPDL!WorkSequence
+	to sws : SPDL!WorkSequence(
+		linkType <- thisModule.convertLinkType(xws.linkType), -- Appel Ã  notre helper
+		predecessor <- xws.predecessor, -- Conversion/appel de rÃ¨gle implicite
+		successor <- xws.successor
+	)
+}
+
+rule XGuidance2SGuidance {
+	from xg : XPDL!Guidance
+	to sg : SPDL!Guidance(text <- xg.texte)
+}
