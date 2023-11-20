@@ -5,7 +5,9 @@
   </processElements>
   <processElements xsi:type="simplepdl:WorkDefinition" name="RedactionDoc" linksToPredecessors="//@processElements.4 //@processElements.5"/>
   <processElements xsi:type="simplepdl:WorkDefinition" name="Programmation" linksToPredecessors="//@processElements.6" linksToSuccessors="//@processElements.8"/>
-  <processElements xsi:type="simplepdl:WorkDefinition" name="RedactionTests" linksToPredecessors="//@processElements.7 //@processElements.8"/>
+  <processElements xsi:type="simplepdl:WorkDefinition" name="RedactionTests" linksToPredecessors="//@processElements.7 //@processElements.8">
+    <linksToNeeds need="3" linkToRessource="//@processElements.9"/>
+  </processElements>
   <processElements xsi:type="simplepdl:WorkSequence" predecessor="//@processElements.0" successor="//@processElements.1"/>
   <processElements xsi:type="simplepdl:WorkSequence" linkType="finishToFinish" predecessor="//@processElements.0" successor="//@processElements.1"/>
   <processElements xsi:type="simplepdl:WorkSequence" linkType="finishToStart" predecessor="//@processElements.0" successor="//@processElements.2"/>

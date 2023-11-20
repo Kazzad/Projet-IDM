@@ -52,7 +52,7 @@
             </style>
           </conditionnalStyles>
         </edgeMappings>
-        <edgeMappings name="RNEdge" sourceMapping="//@ownedViewpoints[name='simplepdlViewpoint']/@ownedRepresentations[name='ProcessDiagram']/@defaultLayer/@nodeMappings[name='RessourceNode']" targetMapping="//@ownedViewpoints[name='simplepdlViewpoint']/@ownedRepresentations[name='ProcessDiagram']/@defaultLayer/@nodeMappings[name='WDNode']" targetFinderExpression="feature:linkToWorkDefinition" sourceFinderExpression="feature:linkToRessource" domainClass="simplepdl::RessourceNeed" useDomainElement="true">
+        <edgeMappings name="RNEdge" sourceMapping="//@ownedViewpoints[name='simplepdlViewpoint']/@ownedRepresentations[name='ProcessDiagram']/@defaultLayer/@nodeMappings[name='WDNode']" targetMapping="//@ownedViewpoints[name='simplepdlViewpoint']/@ownedRepresentations[name='ProcessDiagram']/@defaultLayer/@nodeMappings[name='RessourceNode']" targetFinderExpression="feature:linkToRessource" sourceFinderExpression="feature:linkToWorkDefinition" domainClass="simplepdl::RessourceNeed" useDomainElement="true">
           <style sizeComputationExpression="2">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription labelSize="5" labelExpression="[need/]">
@@ -121,10 +121,10 @@
             <sourceViewVariable name="sourceView"/>
             <targetViewVariable name="targetView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer()/]">
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
                 <subModelOperations xsi:type="tool_1:CreateInstance" typeName="simplepdl::RessourceNeed" referenceName="linksToNeeds">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="linkToRessource" valueExpression="[source/]"/>
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="linkToWorkDefinition" valueExpression="[target/]"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="linkToRessource" valueExpression="[target/]"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="linkToWorkDefinition" valueExpression="[source/]"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>

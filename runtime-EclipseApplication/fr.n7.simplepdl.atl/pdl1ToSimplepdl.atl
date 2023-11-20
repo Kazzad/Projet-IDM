@@ -43,3 +43,13 @@ rule XGuidance2SGuidance {
 	from xg : XPDL!Guidance
 	to sg : SPDL!Guidance(text <- xg.texte)
 }
+
+rule XRessource2SRessource {
+	from xr : XPDL!Ressource
+	to sr : SPDL!Ressource(name <- xr.name,amount <- xr.amount)
+}
+
+rule XRN2SRN {
+	from xrn : XPDL!RessourceNeed
+	to srn : SPDL!RessourceNeed(need <- xrn.need,linkToRessource <- xrn.linkToRessource, linkToWorkDefinition <- xrn.linkToWorkDefinition )
+}
