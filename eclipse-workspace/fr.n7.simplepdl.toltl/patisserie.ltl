@@ -1,7 +1,7 @@
 
-finished =     manger_finished 		/\ faireCookie_finished
+finished =     faireCookie_finished 		/\ manger_finished
 [] <> finished;
 - <> finished;
-		[](manger_idle + manger_running + manger_finished = 1);
 		[](faireCookie_idle + faireCookie_running + faireCookie_finished = 1);
+		[](manger_idle + manger_running + manger_finished = 1);
 

@@ -3,54 +3,58 @@ import 'SimplePDL.ecore'
 package simplepdl
 
 context Process
-	inv nomValide('nom invalide: ' + self.name):
-		self.name.matches('[A-Za-z_][A-Za-z0-9_]*')
-	inv nomUniqueWD: self.processElements
-			-> select (pe | pe.oclIsTypeOf(WorkDefinition))
-			-> collect (pe | pe.oclAsType(WorkDefinition))
-			-> forAll (wd1, wd2 | wd1=wd2 or wd1.name <> wd2.name)
-	inv nomUniqueR: self.processElements
-		-> select (pe | pe.oclIsTypeOf(Ressource))
-		-> collect (pe | pe.oclAsType(Ressource))
-		-> forAll (r1, r2 | r1=r2 or r1.name <> r2.name)
-		
-context ProcessElement
-def : process(): Process =
-		Process.allInstances()
-			->select(p|p.processElements->includes(self))
-			->asSequence()->first()
-			
-context WorkSequence
-	inv successorAndPredecessorInSameProcess('Activities not in the same process : '
-		+ self.predecessor.name + 'in' + self.predecessor.process().name + 'and'
-		+ self.successor.name + 'in' + self.successor.process().name
-	):
-		self.process() = self.successor.process()
-		and self.process() = self.predecessor.process()
-	inv nonReflexive: self.predecessor <> self.successor
+inv nomValide:
+	self.name.matches('[A-Za-z_][A-Za-z0-9_]*')
+inv nomUniqueWD:
+	self.processElements
+	-> select (pe | pe.oclIsTypeOf(WorkDefinition))
+	-> collect (pe | pe.oclAsType(WorkDefinition))
+	-> forAll (wd1, wd2 | wd1=wd2 or wd1.name <> wd2.name)
+inv nomUniqueR:
+	self.processElements
+	-> select (pe | pe.oclIsTypeOf(Ressource))
+	-> collect (pe | pe.oclAsType(Ressource))
+	-> forAll (r1, r2 | r1=r2 or r1.name <> r2.name)
 	
+	
+context ProcessElement
+def: process():
+	Process = Process.allInstances()
+	->select(p | p.processElements->includes(self))
+	->asSequence()->first()
+	
+	
+context WorkSequence
+inv nonReflexif:
+	self.predecessor <> self.successor
+inv successeurEtPredecesseurDansMemeProcess:
+	self.process() = self.successor.process()
+	and self.process() = self.predecessor.process()
+
+
 context WorkDefinition
-	inv nomPasCourt: self.name.size() > 1
-	inv nomValide: self.name.matches('[A-Za-z_][A-Za-z0-9_]*')
-	inv needsNormaux ('Une WorkDefinition doit demander une ressource en une seule fois'): self.linksToNeeds
-		-> select (rn | rn.oclIsTypeOf(RessourceNeed))
-		-> collect (rn | rn.oclAsType(RessourceNeed))
-		-> forAll (rn1, rn2 | rn1=rn2 or (rn1.linkToRessource.name <> rn2.linkToRessource.name))
+inv nomPasCourt:
+	self.name.size() > 1
+inv nomValide:
+	self.name.matches('[A-Za-z_][A-Za-z0-9_]*')
+inv unSeulNeedParRessource:
+	self.linksToNeeds
+	-> select (rn | rn.oclIsTypeOf(RessourceNeed))
+	-> collect (rn | rn.oclAsType(RessourceNeed))
+	-> forAll (rn1, rn2 | rn1=rn2 or (rn1.linkToRessource.name <> rn2.linkToRessource.name or rn1.linkToWorkDefinition.name <> rn2.linkToWorkDefinition.name))
+	
 	
 context Ressource
-	inv positiveAmount: self.amount >= 0
-	inv nomPasCourt: self.name.size() > 1
-	inv nomValide: self.name.matches('[A-Za-z_][A-Za-z0-9_]*')
-	inv stockSuffisant ('La somme des demandes de ressources dépasse le nombre de ressources disponibles pour la ressource ' + self.name): 
-		self.process().processElements
-			-> select (pe | pe.oclIsTypeOf(WorkDefinition))
-			-> collect (pe | pe.oclAsType(WorkDefinition))
-			-> collect(wd | wd.linksToNeeds)
-				->select(rn | rn.oclIsTypeOf(RessourceNeed) and rn.linkToRessource = self)
-				->collect(rn | rn.oclAsType(RessourceNeed).need)
-				->sum() <= self.amount
+inv quantitePositive:
+	self.amount >= 0
+inv nomPasCourt:
+	self.name.size() > 1
+inv nomValide:
+	self.name.matches('[A-Za-z_][A-Za-z0-9_]*')
+	
 	
 context RessourceNeed
-	inv strictPositiveNeed: self.need > 0
+inv quantiteStrictPositive:
+	self.need > 0
 	
 endpackage

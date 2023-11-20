@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
@@ -78,12 +79,12 @@ public class PetrinetPackageImpl extends EPackageImpl implements PetrinetPackage
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see petrinet.PetrinetPackage#eNS_URI
+	 * @see petrinet.PetrinetPackage#"file:///d:/Mon_Dossier/Prog/Eclipse/eclipse-workspace/fr.n7.petriNet/PetriNet.ecore"
 	 * @see #init()
 	 * @generated
 	 */
 	private PetrinetPackageImpl() {
-		super(eNS_URI, PetrinetFactory.eINSTANCE);
+		super("file:///d:/Mon_Dossier/Prog/Eclipse/eclipse-workspace/fr.n7.petriNet/PetriNet.ecore", PetrinetFactory.eINSTANCE);
 	}
 	/**
 	 * <!-- begin-user-doc -->
@@ -99,16 +100,16 @@ public class PetrinetPackageImpl extends EPackageImpl implements PetrinetPackage
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #eNS_URI
+	 * @see #"file:///d:/Mon_Dossier/Prog/Eclipse/eclipse-workspace/fr.n7.petriNet/PetriNet.ecore"
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
 	public static PetrinetPackage init() {
-		if (isInited) return (PetrinetPackage)EPackage.Registry.INSTANCE.getEPackage(PetrinetPackage.eNS_URI);
+		if (isInited) return (PetrinetPackage)EPackage.Registry.INSTANCE.getEPackage("file:///d:/Mon_Dossier/Prog/Eclipse/eclipse-workspace/fr.n7.petriNet/PetriNet.ecore");
 
 		// Obtain or create and register package
-		Object registeredPetrinetPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		Object registeredPetrinetPackage = EPackage.Registry.INSTANCE.get("file:///d:/Mon_Dossier/Prog/Eclipse/eclipse-workspace/fr.n7.petriNet/PetriNet.ecore");
 		PetrinetPackageImpl thePetrinetPackage = registeredPetrinetPackage instanceof PetrinetPackageImpl ? (PetrinetPackageImpl)registeredPetrinetPackage : new PetrinetPackageImpl();
 
 		isInited = true;
@@ -123,7 +124,7 @@ public class PetrinetPackageImpl extends EPackageImpl implements PetrinetPackage
 		thePetrinetPackage.freeze();
 
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(PetrinetPackage.eNS_URI, thePetrinetPackage);
+		EPackage.Registry.INSTANCE.put("file:///d:/Mon_Dossier/Prog/Eclipse/eclipse-workspace/fr.n7.petriNet/PetriNet.ecore", thePetrinetPackage);
 		return thePetrinetPackage;
 	}
 
@@ -351,7 +352,7 @@ public class PetrinetPackageImpl extends EPackageImpl implements PetrinetPackage
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	public void initializePackageContents() {
 		if (isInitialized) return;
@@ -360,7 +361,7 @@ public class PetrinetPackageImpl extends EPackageImpl implements PetrinetPackage
 		// Initialize package
 		setName(eNAME);
 		setNsPrefix(eNS_PREFIX);
-		setNsURI(eNS_URI);
+		setNsURI("file:///d:/Mon_Dossier/Prog/Eclipse/eclipse-workspace/fr.n7.petriNet/PetriNet.ecore");
 
 		// Create type parameters
 
@@ -396,7 +397,8 @@ public class PetrinetPackageImpl extends EPackageImpl implements PetrinetPackage
 		initEReference(getCaseElement_LinksToNextArcs(), this.getArc(), this.getArc_LinkToPrevCase(), "linksToNextArcs", null, 0, -1, CaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
-		createResource(eNS_URI);
+		createResource("../../../PetriNet.ecore/");
 	}
+	
 
 } //PetrinetPackageImpl

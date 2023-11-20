@@ -27,7 +27,7 @@ rule XProc2SProc {
 
 rule XWD2SWD {
 	from xwd : XPDL!WorkDefinition
-	to swd : SPDL!WorkDefinition(name <- xwd.name.debug('wd'))
+	to swd : SPDL!WorkDefinition(name <- xwd.name.debug('wd'), linksToNeeds <- xwd.linksToNeeds)
 }
 
 rule XWS2SWS {
@@ -51,5 +51,5 @@ rule XRessource2SRessource {
 
 rule XRN2SRN {
 	from xrn : XPDL!RessourceNeed
-	to srn : SPDL!RessourceNeed(need <- xrn.need,linkToRessource <- xrn.linkToRessource, linkToWorkDefinition <- xrn.linkToWorkDefinition )
+	to srn : SPDL!RessourceNeed(need <- xrn.need,linkToRessource <- xrn.linkToRessource )
 }

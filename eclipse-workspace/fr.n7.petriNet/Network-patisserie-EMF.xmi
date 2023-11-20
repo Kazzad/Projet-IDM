@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<petrinet:Network xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:petrinet="http://petrinet" name="patisserie">
+<petrinet:Network xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:petrinet="file:///d:/Mon_Dossier/Prog/Eclipse/eclipse-workspace/fr.n7.petriNet/PetriNet.ecore" name="patisserie">
   <networkElements xsi:type="petrinet:Place" name="pateCookie" linksToPrevArcs="//@networkElements.14" linksToNextArcs="//@networkElements.13" tokens="20"/>
   <networkElements xsi:type="petrinet:Place" name="pepitesChocolat" linksToPrevArcs="//@networkElements.16" linksToNextArcs="//@networkElements.15" tokens="300"/>
   <networkElements xsi:type="petrinet:Place" name="faireCookie_idle" linksToNextArcs="//@networkElements.8" tokens="1"/>

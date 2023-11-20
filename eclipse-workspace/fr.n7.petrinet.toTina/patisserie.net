@@ -1,0 +1,17 @@
+
+net patisserie
+		pl pateCookie (20)
+		pl pepitesChocolat (300)
+		pl faireCookie_idle (1)
+		pl faireCookie_started (0)
+		pl faireCookie_running (0)
+		pl faireCookie_finished (0)
+		pl manger_idle (1)
+		pl manger_started (0)
+		pl manger_running (0)
+		pl manger_finished (0)
+		tr faireCookie_start faireCookie_idle pateCookie pepitesChocolat*10 -> faireCookie_started faireCookie_running
+		tr faireCookie_finish faireCookie_running -> faireCookie_finished pateCookie pepitesChocolat*10
+		tr manger_start manger_idle faireCookie_finished?1 -> manger_started manger_running
+		tr manger_finish manger_running -> manger_finished
+

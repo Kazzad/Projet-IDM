@@ -9,7 +9,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.osgi.annotation.bundle.Attribute;
+import org.eclipse.emf.ecore.EClass.*;
 
 import simplepdl.Process;
 import simplepdl.SimplepdlPackage;
@@ -211,8 +214,6 @@ public class PetriNetFromSimplePDL {
 				arc.setLinkToNextCase(nextTransition);
 			}
 		}
-	
-	    
 		
 		// Sauver la ressource
 	    try {

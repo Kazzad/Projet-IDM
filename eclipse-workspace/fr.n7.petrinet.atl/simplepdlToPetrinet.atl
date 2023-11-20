@@ -6,7 +6,7 @@ create OUT : PetriNet from IN : SimplePDL;
 
 rule Process2Network {
 	from process : SimplePDL!Process
-	to network : PetriNet!Network(name <- network.name)
+	to network : PetriNet!Network(name <- process.name, networkElements <- PetriNet!NetworkElement.allInstances())
 }
 
 rule WD2Machin {
@@ -71,3 +71,7 @@ rule RessourceNeed2Arcs {
 								linkToPrevCase <- thisModule.resolveTemp(rn.linkToWorkDefinition, 'finish'),
 								linkToNextCase <- rn.linkToRessource)
 }
+
+helper context SimplePDL!ProcessElement
+	def: getProcess() : SimplePDL!Process =
+	SimplePDL!Process.allInstances()->select(e | e.processElements->includes(self));
