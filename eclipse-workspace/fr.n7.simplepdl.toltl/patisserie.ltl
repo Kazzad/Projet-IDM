@@ -1,7 +1,20 @@
 
-finished =     faireCookie_finished 		/\ manger_finished
-[] <> finished;
-- <> finished;
-		[](faireCookie_idle + faireCookie_running + faireCookie_finished = 1);
-		[](manger_idle + manger_running + manger_finished = 1);
+# A chaque instant, il existe un instant ultérieur où le processus est fini
+[] <> (manger_finished /\ faireCookie_finished);
 
+# Le processus ne se finit jamais
+- <> (manger_finished /\ faireCookie_finished);
+
+## Invariants :
+
+# Chaque activité est soit non commencée, soit en cours, soit terminée
+[](manger_idle + manger_running + manger_finished = 1 /\ faireCookie_idle + faireCookie_running + faireCookie_finished = 1);
+
+# Une activité terminée n'évolue plus
+[]((- manger_finished) \/ ([] manger_finished) /\ ((- faireCookie_finished) \/ ([] faireCookie_finished)));
+
+# Une activité idle ne peut pas avoir started
+- <> ((manger_idle /\ manger_started) /\ (faireCookie_idle /\ faireCookie_started));
+
+# Une activité ne peut pas être finished ou running sans avoir started
+[] (((manger_started /\ (manger_running \/ manger_finished)) \/ - manger_started) /\ ((faireCookie_started /\ (faireCookie_running \/ faireCookie_finished)) \/ - faireCookie_started));

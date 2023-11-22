@@ -6,19 +6,33 @@
 [comment @main/]
 [file (aProcess.name + '.ltl', false, 'UTF-8')]
 
-finished = [let wds : Sequence(WorkDefinition) = aProcess.getWDs() -> asSequence()]
-    [wds->first().name/]_finished [for (wd : WorkDefinition | wds->subSequence(2,wds->size()))]
-		[wd.Terminaison()/]
-	[/for]
-[/let]
-['[]'/] <> finished;
-- <> finished;
+# A chaque instant, il existe un instant ultérieur où le processus est fini
+['[]'/] <> ([ToutFini(aProcess)/]);
+
+# Le processus ne se finit jamais
+- <> ([ToutFini(aProcess)/]);
+
+## Invariants :
+
+# Chaque activité est soit non commencée, soit en cours, soit terminée
 [let wds : OrderedSet(WorkDefinition) = aProcess.getWDs() ]
-	[for (wd : WorkDefinition | wds)]
-		[wd.AssureEtatUnique()/]
-	[/for]
+['[]'/]([aProcess.AssureTousEtatUnique()/]);
 [/let]
 
+# Une activité terminée n'évolue plus
+[let wds : OrderedSet(WorkDefinition) = aProcess.getWDs() ]
+['[]'/]([aProcess.AssureTousTerminaisonDef()/]);
+[/let]
+
+# Une activité idle ne peut pas avoir started
+[let wds : OrderedSet(WorkDefinition) = aProcess.getWDs() ]
+- <> ([aProcess.AssureTousPasIdleEtStarted()/]);
+[/let]
+
+# Une activité ne peut pas être finished ou running sans avoir started
+[let wds : OrderedSet(WorkDefinition) = aProcess.getWDs() ]
+['[]'/] ([aProcess.AssureTousStartedAvantTout()/]);
+[/let]
 [/file]
 [/template]
 
@@ -28,10 +42,50 @@ finished = [let wds : Sequence(WorkDefinition) = aProcess.getWDs() -> asSequence
 		->asOrderedSet()
 /]
 
+[template public AssureStartedAvantTout (wd : WorkDefinition) post(trim())]
+ /\ (([wd.name /]_started /\ ([wd.name /]_running \/ [wd.name /]_finished)) \/ - [wd.name /]_started)
+[/template]
+[template public AssureTousStartedAvantTout (p : Process) post(trim())]
+[let wds : Sequence(WorkDefinition) = p.getWDs() -> asSequence()]
+(([wds->first().name /]_started /\ ([wds->first().name /]_running \/ [wds->first().name /]_finished)) \/ - [wds->first().name /]_started) [for (wd : WorkDefinition | wds->subSequence(2,wds->size()))][wd.AssureStartedAvantTout()/][/for]
+[/let]
+[/template]
+
+[template public AssurePasIdleEtStarted(wd : WorkDefinition) post(trim())]
+ /\ ([wd.name /]_idle /\ [wd.name /]_started)
+[/template]
+[template public AssureTousPasIdleEtStarted (p : Process) post(trim())]
+[let wds : Sequence(WorkDefinition) = p.getWDs() -> asSequence()]
+([wds->first().name /]_idle /\ [wds->first().name /]_started) [for (wd : WorkDefinition | wds->subSequence(2,wds->size()))][wd.AssurePasIdleEtStarted()/][/for]
+[/let]
+[/template]
+
+[template public AssureTerminaisonDef(wd : WorkDefinition) post(trim())]
+ /\ ((- [wd.name /]_finished) \/ (['[]'/] [wd.name /]_finished))
+[/template]
+[template public AssureTousTerminaisonDef (p : Process) post(trim())]
+[let wds : Sequence(WorkDefinition) = p.getWDs() -> asSequence()]
+(- [wds->first().name /]_finished) \/ (['[]'/] [wds->first().name /]_finished) [for (wd : WorkDefinition | wds->subSequence(2,wds->size()))][wd.AssureTerminaisonDef()/][/for]
+[/let]
+[/template]
+
 [template public AssureEtatUnique(wd : WorkDefinition) post (trim()) ]
-	['[]'/]([wd.name /]_idle + [wd.name /]_running + [wd.name /]_finished = 1);
+ /\ [wd.name /]_idle + [wd.name /]_running + [wd.name /]_finished = 1 
+[/template]
+[template public AssureTousEtatUnique (p : Process) post(trim())]
+[let wds : Sequence(WorkDefinition) = p.getWDs() -> asSequence()]
+[wds->first().name /]_idle + [wds->first().name /]_running + [wds->first().name /]_finished = 1 [for (wd : WorkDefinition | wds->subSequence(2,wds->size()))][wd.AssureEtatUnique()/][/for]
+[/let]
 [/template]
 
 [template public Terminaison(wd : WorkDefinition) post (trim()) ]
-	/\ [wd.name /]_finished
+/\ [wd.name /]_finished
+[/template]
+
+[template public ToutFini (p : Process) post(trim())]
+[let wds : Sequence(WorkDefinition) = p.getWDs() -> asSequence()]
+[wds->first().name/]_finished [for (wd : WorkDefinition | wds->subSequence(2,wds->size()))]
+[wd.Terminaison()/]
+[/for]
+[/let]
 [/template]

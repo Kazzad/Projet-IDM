@@ -1,0 +1,15 @@
+
+net blocage
+		pl Process_A_idle (1)
+		pl Process_A_started (0)
+		pl Process_A_running (0)
+		pl Process_A_finished (0)
+		pl Process_B_idle (1)
+		pl Process_B_started (0)
+		pl Process_B_running (0)
+		pl Process_B_finished (0)
+		tr Process_A_start Process_A_idle Process_B_finished?1 -> Process_A_started Process_A_running
+		tr Process_A_finish Process_A_running -> Process_A_finished
+		tr Process_B_start Process_B_idle Process_A_finished?1 -> Process_B_started Process_B_running
+		tr Process_B_finish Process_B_running -> Process_B_finished
+

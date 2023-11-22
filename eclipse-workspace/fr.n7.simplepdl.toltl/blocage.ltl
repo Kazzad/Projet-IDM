@@ -1,0 +1,10 @@
+
+# Le processus se finit toujours
+[] <> (Process_A_finished /\ Process_B_finished);
+
+# Le processus ne se finit jamais
+- <> (Process_A_finished /\ Process_B_finished);
+
+[](Process_A_idle + Process_A_running + Process_A_finished = 1);
+[](Process_B_idle + Process_B_running + Process_B_finished = 1);
+
