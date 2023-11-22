@@ -1,0 +1,40 @@
+
+digraph developpement {
+	{
+		node [shape="box"];Conception_start;Conception_finish;RedactionDoc_start;RedactionDoc_finish;Programmation_start;Programmation_finish;RedactionTests_start;RedactionTests_finish;
+	}
+			"Conception_idle (1)" -> "Conception_start" [arrowhead=vee label=1]
+			"Conception_start" -> "Conception_started (0)" [arrowhead=vee label=1]
+			"Conception_start" -> "Conception_running (0)" [arrowhead=vee label=1]
+			"Conception_running (0)" -> "Conception_finish" [arrowhead=vee label=1]
+			"Conception_finish" -> "Conception_finished (0)" [arrowhead=vee label=1]
+			"Développeur (4)" -> "Conception_start" [arrowhead=vee label=1]
+			"Conception_finish" -> "Développeur (4)" [arrowhead=vee label=1]
+			"RedactionDoc_idle (1)" -> "RedactionDoc_start" [arrowhead=vee label=1]
+			"RedactionDoc_start" -> "RedactionDoc_started (0)" [arrowhead=vee label=1]
+			"RedactionDoc_start" -> "RedactionDoc_running (0)" [arrowhead=vee label=1]
+			"RedactionDoc_running (0)" -> "RedactionDoc_finish" [arrowhead=vee label=1]
+			"RedactionDoc_finish" -> "RedactionDoc_finished (0)" [arrowhead=vee label=1]
+			"Programmation_idle (1)" -> "Programmation_start" [arrowhead=vee label=1]
+			"Programmation_start" -> "Programmation_started (0)" [arrowhead=vee label=1]
+			"Programmation_start" -> "Programmation_running (0)" [arrowhead=vee label=1]
+			"Programmation_running (0)" -> "Programmation_finish" [arrowhead=vee label=1]
+			"Programmation_finish" -> "Programmation_finished (0)" [arrowhead=vee label=1]
+			"Développeur (4)" -> "Programmation_start" [arrowhead=vee label=2]
+			"Programmation_finish" -> "Développeur (4)" [arrowhead=vee label=2]
+			"RedactionTests_idle (1)" -> "RedactionTests_start" [arrowhead=vee label=1]
+			"RedactionTests_start" -> "RedactionTests_started (0)" [arrowhead=vee label=1]
+			"RedactionTests_start" -> "RedactionTests_running (0)" [arrowhead=vee label=1]
+			"RedactionTests_running (0)" -> "RedactionTests_finish" [arrowhead=vee label=1]
+			"RedactionTests_finish" -> "RedactionTests_finished (0)" [arrowhead=vee label=1]
+			"Développeur (4)" -> "RedactionTests_start" [arrowhead=vee label=1]
+			"RedactionTests_finish" -> "Développeur (4)" [arrowhead=vee label=1]
+			"Testeur (1)" -> "RedactionTests_start" [arrowhead=vee label=1]
+			"RedactionTests_finish" -> "Testeur (1)" [arrowhead=vee label=1]
+			"Conception_finished (0)" -> "RedactionDoc_finish" [arrowhead=dot label=1]
+			"Conception_started (0)" -> "RedactionDoc_start" [arrowhead=dot label=1]
+			"Conception_finished (0)" -> "Programmation_start" [arrowhead=dot label=1]
+			"Conception_started (0)" -> "RedactionTests_start" [arrowhead=dot label=1]
+			"Programmation_finished (0)" -> "RedactionTests_finish" [arrowhead=dot label=1]
+}
+

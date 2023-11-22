@@ -50,7 +50,7 @@ public class PetriNetFromSimplePDL {
 		ResourceSet spResSet = new ResourceSetImpl();
 
 		// Charger la ressource (notre modÃƒÂ¨le)
-		URI spModelURI = URI.createURI("Process-blocage.xmi");
+		URI spModelURI = URI.createURI(args[0]);
 		Resource spResource = spResSet.getResource(spModelURI, true);
 		
 		
@@ -67,7 +67,7 @@ public class PetriNetFromSimplePDL {
 		ResourceSet pnResSet = new ResourceSetImpl();
 
 		// DÃƒÂ©finir la ressource (le modÃƒÂ¨le)
-		URI pnModelURI = URI.createURI("Network-blocage-EMF.xmi");
+		URI pnModelURI = URI.createURI(args[1]);
 		Resource pnResource = pnResSet.createResource(pnModelURI);
 		
 		// La fabrique pour fabriquer les ÃƒÂ©lÃƒÂ©ments de PetriNet

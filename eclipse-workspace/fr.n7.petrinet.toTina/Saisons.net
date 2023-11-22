@@ -1,7 +1,0 @@
-
-net Saisons
-		pl ete (1)
-		pl hiver (0)
-		tr ete_a_hiver ete -> hiver
-		tr hiver_a_ete hiver -> ete
-
