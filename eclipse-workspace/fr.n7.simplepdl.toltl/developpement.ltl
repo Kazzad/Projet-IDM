@@ -1,0 +1,24 @@
+
+# A chaque instant, il existe un instant ultérieur où le processus est fini
+[] <> (Conception_finished /\ RedactionTests_finished
+/\ Programmation_finished
+/\ RedactionDoc_finished);
+
+# Le processus ne se finit jamais
+- <> (Conception_finished /\ RedactionTests_finished
+/\ Programmation_finished
+/\ RedactionDoc_finished);
+
+## Invariants :
+
+# Chaque activité est soit non commencée, soit en cours, soit terminée
+[](Conception_idle + Conception_running + Conception_finished = 1 /\ RedactionTests_idle + RedactionTests_running + RedactionTests_finished = 1/\ Programmation_idle + Programmation_running + Programmation_finished = 1/\ RedactionDoc_idle + RedactionDoc_running + RedactionDoc_finished = 1);
+
+# Une activité terminée n'évolue plus
+[]((- Conception_finished) \/ ([] Conception_finished) /\ ((- RedactionTests_finished) \/ ([] RedactionTests_finished))/\ ((- Programmation_finished) \/ ([] Programmation_finished))/\ ((- RedactionDoc_finished) \/ ([] RedactionDoc_finished)));
+
+# Une activité idle ne peut pas avoir started
+- <> ((Conception_idle /\ Conception_started) /\ (RedactionTests_idle /\ RedactionTests_started)/\ (Programmation_idle /\ Programmation_started)/\ (RedactionDoc_idle /\ RedactionDoc_started));
+
+# Une activité ne peut pas être finished ou running sans avoir started
+[] (((Conception_started /\ (Conception_running \/ Conception_finished)) \/ - Conception_started) /\ ((RedactionTests_started /\ (RedactionTests_running \/ RedactionTests_finished)) \/ - RedactionTests_started)/\ ((Programmation_started /\ (Programmation_running \/ Programmation_finished)) \/ - Programmation_started)/\ ((RedactionDoc_started /\ (RedactionDoc_running \/ RedactionDoc_finished)) \/ - RedactionDoc_started));

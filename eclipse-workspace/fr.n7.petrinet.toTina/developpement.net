@@ -1,0 +1,29 @@
+
+net developpement
+		pl Developpeur (4)
+		pl Testeur (1)
+		pl Conception_idle (1)
+		pl Conception_started (0)
+		pl Conception_running (0)
+		pl Conception_finished (0)
+		pl RedactionDoc_idle (1)
+		pl RedactionDoc_started (0)
+		pl RedactionDoc_running (0)
+		pl RedactionDoc_finished (0)
+		pl Programmation_idle (1)
+		pl Programmation_started (0)
+		pl Programmation_running (0)
+		pl Programmation_finished (0)
+		pl RedactionTests_idle (1)
+		pl RedactionTests_started (0)
+		pl RedactionTests_running (0)
+		pl RedactionTests_finished (0)
+		tr Conception_start Conception_idle Developpeur -> Conception_started Conception_running
+		tr Conception_finish Conception_running -> Conception_finished Developpeur
+		tr RedactionDoc_start RedactionDoc_idle Programmation_started?1 -> RedactionDoc_started RedactionDoc_running
+		tr RedactionDoc_finish RedactionDoc_running Programmation_finished?1 -> RedactionDoc_finished
+		tr Programmation_start Programmation_idle Developpeur*2 Conception_finished?1 -> Programmation_started Programmation_running
+		tr Programmation_finish Programmation_running -> Programmation_finished Developpeur*2
+		tr RedactionTests_start RedactionTests_idle Developpeur Testeur Conception_started?1 -> RedactionTests_started RedactionTests_running
+		tr RedactionTests_finish RedactionTests_running Conception_finished?1 Programmation_finished?1 -> RedactionTests_finished Developpeur Testeur
+
