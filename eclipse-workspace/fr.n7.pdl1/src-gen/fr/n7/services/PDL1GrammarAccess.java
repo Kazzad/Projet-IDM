@@ -39,7 +39,7 @@ public class PDL1GrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//Process :
 		//    'process' name=ID '{'
 		//        processElements+=ProcessElement*
-		//    '}' ;
+		//    '}';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'process' name=ID '{'
@@ -203,12 +203,21 @@ public class PDL1GrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		private final Keyword cNoteKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cTexteAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTexteSTRINGTerminalRuleCall_1_0 = (RuleCall)cTexteAssignment_1.eContents().get(0);
+		private final Keyword cLeftSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cElementsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cElementsProcessElementCrossReference_3_0 = (CrossReference)cElementsAssignment_3.eContents().get(0);
+		private final RuleCall cElementsProcessElementIDTerminalRuleCall_3_0_1 = (RuleCall)cElementsProcessElementCrossReference_3_0.eContents().get(1);
+		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Guidance :
-		//    'note' texte=STRING ;
+		//    'note' texte=STRING '['
+		//        elements+=[ProcessElement]*
+		//    ']';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'note' texte=STRING
+		//'note' texte=STRING '['
+		//    elements+=[ProcessElement]*
+		//']'
 		public Group getGroup() { return cGroup; }
 		
 		//'note'
@@ -219,6 +228,21 @@ public class PDL1GrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		
 		//STRING
 		public RuleCall getTexteSTRINGTerminalRuleCall_1_0() { return cTexteSTRINGTerminalRuleCall_1_0; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
+		
+		//elements+=[ProcessElement]*
+		public Assignment getElementsAssignment_3() { return cElementsAssignment_3; }
+		
+		//[ProcessElement]
+		public CrossReference getElementsProcessElementCrossReference_3_0() { return cElementsProcessElementCrossReference_3_0; }
+		
+		//ID
+		public RuleCall getElementsProcessElementIDTerminalRuleCall_3_0_1() { return cElementsProcessElementIDTerminalRuleCall_3_0_1; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 	}
 	public class RessourceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "fr.n7.PDL1.Ressource");
@@ -310,7 +334,7 @@ public class PDL1GrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 		//    | finish2start='f2s'
 		//    | start2finish='s2f'
 		//    | finish2finish='f2f'
-		//    ;
+		//;
 		public EnumRule getRule() { return rule; }
 		
 		//start2start='s2s'
@@ -402,7 +426,7 @@ public class PDL1GrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//Process :
 	//    'process' name=ID '{'
 	//        processElements+=ProcessElement*
-	//    '}' ;
+	//    '}';
 	public ProcessElements getProcessAccess() {
 		return pProcess;
 	}
@@ -446,7 +470,9 @@ public class PDL1GrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	}
 	
 	//Guidance :
-	//    'note' texte=STRING ;
+	//    'note' texte=STRING '['
+	//        elements+=[ProcessElement]*
+	//    ']';
 	public GuidanceElements getGuidanceAccess() {
 		return pGuidance;
 	}
@@ -481,7 +507,7 @@ public class PDL1GrammarAccess extends AbstractElementFinder.AbstractGrammarElem
 	//    | finish2start='f2s'
 	//    | start2finish='s2f'
 	//    | finish2finish='f2f'
-	//    ;
+	//;
 	public WorkSequenceTypeElements getWorkSequenceTypeAccess() {
 		return eWorkSequenceType;
 	}

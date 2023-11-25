@@ -365,6 +365,27 @@ ruleGuidance returns [EObject current=null]
 				}
 			)
 		)
+		otherlv_2='['
+		{
+			newLeafNode(otherlv_2, grammarAccess.getGuidanceAccess().getLeftSquareBracketKeyword_2());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getGuidanceRule());
+					}
+				}
+				otherlv_3=RULE_ID
+				{
+					newLeafNode(otherlv_3, grammarAccess.getGuidanceAccess().getElementsProcessElementCrossReference_3_0());
+				}
+			)
+		)*
+		otherlv_4=']'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getGuidanceAccess().getRightSquareBracketKeyword_4());
+		}
 	)
 ;
 

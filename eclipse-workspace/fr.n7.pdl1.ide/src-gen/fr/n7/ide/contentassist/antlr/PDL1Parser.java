@@ -47,6 +47,7 @@ public class PDL1Parser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getWorkSequenceAccess().getPredecessorAssignment_3(), "rule__WorkSequence__PredecessorAssignment_3");
 			builder.put(grammarAccess.getWorkSequenceAccess().getSuccessorAssignment_5(), "rule__WorkSequence__SuccessorAssignment_5");
 			builder.put(grammarAccess.getGuidanceAccess().getTexteAssignment_1(), "rule__Guidance__TexteAssignment_1");
+			builder.put(grammarAccess.getGuidanceAccess().getElementsAssignment_3(), "rule__Guidance__ElementsAssignment_3");
 			builder.put(grammarAccess.getRessourceAccess().getNameAssignment_1(), "rule__Ressource__NameAssignment_1");
 			builder.put(grammarAccess.getRessourceAccess().getAmountAssignment_2(), "rule__Ressource__AmountAssignment_2");
 			builder.put(grammarAccess.getRessourceNeedAccess().getNeedAssignment_1(), "rule__RessourceNeed__NeedAssignment_1");

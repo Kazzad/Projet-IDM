@@ -296,6 +296,17 @@ public class PDL1PackageImpl extends EPackageImpl implements PDL1Package
    * @generated
    */
   @Override
+  public EReference getGuidance_Elements()
+  {
+    return (EReference)guidanceEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getRessource()
   {
     return ressourceEClass;
@@ -415,6 +426,7 @@ public class PDL1PackageImpl extends EPackageImpl implements PDL1Package
 
     guidanceEClass = createEClass(GUIDANCE);
     createEAttribute(guidanceEClass, GUIDANCE__TEXTE);
+    createEReference(guidanceEClass, GUIDANCE__ELEMENTS);
 
     ressourceEClass = createEClass(RESSOURCE);
     createEAttribute(ressourceEClass, RESSOURCE__NAME);
@@ -480,6 +492,7 @@ public class PDL1PackageImpl extends EPackageImpl implements PDL1Package
 
     initEClass(guidanceEClass, Guidance.class, "Guidance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getGuidance_Texte(), ecorePackage.getEString(), "texte", null, 0, 1, Guidance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGuidance_Elements(), this.getProcessElement(), null, "elements", null, 0, -1, Guidance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(ressourceEClass, Ressource.class, "Ressource", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRessource_Name(), ecorePackage.getEString(), "name", null, 0, 1, Ressource.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

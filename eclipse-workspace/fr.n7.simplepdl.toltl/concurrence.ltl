@@ -1,0 +1,20 @@
+
+# A chaque instant, il existe un instant ultérieur où le processus est fini
+[] <> (Process_B_finished /\ Process_A_finished);
+
+# Le processus ne se finit jamais
+- <> (Process_B_finished /\ Process_A_finished);
+
+## Invariants :
+
+# Chaque activité est soit non commencée, soit en cours, soit terminée
+[](Process_B_idle + Process_B_running + Process_B_finished = 1 /\ Process_A_idle + Process_A_running + Process_A_finished = 1);
+
+# Une activité terminée n'évolue plus
+[]((- Process_B_finished) \/ ([] Process_B_finished) /\ ((- Process_A_finished) \/ ([] Process_A_finished)));
+
+# Une activité idle ne peut pas avoir started
+- <> ((Process_B_idle /\ Process_B_started) /\ (Process_A_idle /\ Process_A_started));
+
+# Une activité ne peut pas être finished ou running sans avoir started
+[] (((Process_B_started /\ (Process_B_running \/ Process_B_finished)) \/ - Process_B_started) /\ ((Process_A_started /\ (Process_A_running \/ Process_A_finished)) \/ - Process_A_started));

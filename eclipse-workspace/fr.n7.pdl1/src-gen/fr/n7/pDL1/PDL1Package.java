@@ -217,13 +217,22 @@ public interface PDL1Package extends EPackage
   int GUIDANCE__TEXTE = PROCESS_ELEMENT_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Elements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GUIDANCE__ELEMENTS = PROCESS_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Guidance</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GUIDANCE_FEATURE_COUNT = PROCESS_ELEMENT_FEATURE_COUNT + 1;
+  int GUIDANCE_FEATURE_COUNT = PROCESS_ELEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link fr.n7.pDL1.impl.RessourceImpl <em>Ressource</em>}' class.
@@ -449,6 +458,17 @@ public interface PDL1Package extends EPackage
   EAttribute getGuidance_Texte();
 
   /**
+   * Returns the meta object for the reference list '{@link fr.n7.pDL1.Guidance#getElements <em>Elements</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Elements</em>'.
+   * @see fr.n7.pDL1.Guidance#getElements()
+   * @see #getGuidance()
+   * @generated
+   */
+  EReference getGuidance_Elements();
+
+  /**
    * Returns the meta object for class '{@link fr.n7.pDL1.Ressource <em>Ressource</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -658,6 +678,14 @@ public interface PDL1Package extends EPackage
      * @generated
      */
     EAttribute GUIDANCE__TEXTE = eINSTANCE.getGuidance_Texte();
+
+    /**
+     * The meta object literal for the '<em><b>Elements</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference GUIDANCE__ELEMENTS = eINSTANCE.getGuidance_Elements();
 
     /**
      * The meta object literal for the '{@link fr.n7.pDL1.impl.RessourceImpl <em>Ressource</em>}' class.

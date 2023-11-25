@@ -1,0 +1,22 @@
+
+digraph developpement {
+			"Developpeur (4)" [color=blue fontcolor=blue shape="box"]
+			"Testeur (1)" [color=blue fontcolor=blue shape="box"]
+
+			Conception
+					"Developpeur (4)" -> Conception [arrowhead=vee label=1]
+			RedactionTests
+					"Developpeur (4)" -> RedactionTests [arrowhead=vee label=1]
+					"Testeur (1)" -> RedactionTests [arrowhead=vee label=1]
+			Programmation
+					"Developpeur (4)" -> Programmation [arrowhead=vee label=2]
+			RedactionDoc
+
+			Programmation -> RedactionTests [arrowhead=vee label=f2f]
+			Programmation -> RedactionDoc [arrowhead=vee label=s2s]
+			Conception -> Programmation [arrowhead=vee label=f2s]
+			Conception -> RedactionTests [arrowhead=vee label=s2s]
+			Programmation -> RedactionDoc [arrowhead=vee label=f2f]
+			Conception -> RedactionTests [arrowhead=vee label=f2f]
+}
+

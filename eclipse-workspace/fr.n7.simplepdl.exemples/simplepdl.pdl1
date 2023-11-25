@@ -1,0 +1,15 @@
+process developpement {
+	wd conception [ ressourceNeed 1 from developpeur ]
+	wd redactionDoc [ ]
+	wd programmation [ ressourceNeed 2 from developpeur ]
+	wd redactionTests [ ressourceNeed 1 from developpeur ressourceNeed 1 from testeur ]
+	ws f2f from conception to redactionTests
+	ws s2s from conception to redactionTests
+	ws f2s from conception to programmation
+	ws f2f from programmation to redactionTests
+	ws s2s from programmation to redactionDoc
+	ws f2f from programmation to redactionDoc
+	ressource developpeur 4
+	ressource testeur 1
+	note "Ils sont bons parce qu'ils ont pas fait ASR" [ developpeur ]
+}

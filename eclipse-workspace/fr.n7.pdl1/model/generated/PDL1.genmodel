@@ -28,6 +28,7 @@
     </genClasses>
     <genClasses ecoreClass="PDL1.ecore#//Guidance">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PDL1.ecore#//Guidance/texte"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference PDL1.ecore#//Guidance/elements"/>
     </genClasses>
     <genClasses ecoreClass="PDL1.ecore#//Ressource">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PDL1.ecore#//Ressource/name"/>

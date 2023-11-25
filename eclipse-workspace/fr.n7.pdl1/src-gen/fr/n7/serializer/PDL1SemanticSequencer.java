@@ -66,17 +66,11 @@ public class PDL1SemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Guidance returns Guidance
 	 *
 	 * Constraint:
-	 *     texte=STRING
+	 *     (texte=STRING elements+=[ProcessElement|ID]*)
 	 * </pre>
 	 */
 	protected void sequence_Guidance(ISerializationContext context, Guidance semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, PDL1Package.Literals.GUIDANCE__TEXTE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, PDL1Package.Literals.GUIDANCE__TEXTE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getGuidanceAccess().getTexteSTRINGTerminalRuleCall_1_0(), semanticObject.getTexte());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

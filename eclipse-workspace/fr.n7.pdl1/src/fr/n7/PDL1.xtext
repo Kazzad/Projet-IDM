@@ -4,7 +4,7 @@ generate pDL1 "http://www.n7.fr/PDL1"
 Process :
 	'process' name=ID '{'
 	    processElements+=ProcessElement*
-	'}' ;
+	'}';
 
 ProcessElement :
 	WorkDefinition | WorkSequence | Guidance | Ressource;
@@ -20,7 +20,9 @@ WorkSequence :
 		'to' successor=[WorkDefinition] ;
 
 Guidance :
-	'note' texte=STRING ;
+	'note' texte=STRING '['
+		elements+=[ProcessElement]*
+	']';
 	
 Ressource :
 	'ressource' name=ID amount=INT;
@@ -34,4 +36,4 @@ enum WorkSequenceType :
 	| finish2start='f2s'
 	| start2finish='s2f'
 	| finish2finish='f2f'
-	;
+;
